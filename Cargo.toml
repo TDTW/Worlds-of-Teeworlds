@@ -1,0 +1,15 @@
+[package]
+name = "Worlds of Teeworlds"
+version = "0.0.1"
+authors = ["Ivan <sgoidxxl@gmail.com>"]
+
+[[bin]]
+name = "client"
+path = "src/core/client/client.rs"
+
+[[bin]]
+name = "server"
+path = "src/core/server/server.rs"
+
+[dependencies]
+sdl2 = "0.25.0"
