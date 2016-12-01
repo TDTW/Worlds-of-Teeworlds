@@ -1,39 +1,41 @@
 mod graphic;
 
 mod client {
-    use std::thread;
-    use std::time::Duration;
-    use graphic;
-
-    trait IClient {
-        fn render(&self);
-    }
+    use graphic::graphics::GraphicsSDL;
 
     pub struct Client {
-        pub running: bool
+        pub running: bool,
+        graphic_sdl: GraphicsSDL
     }
 
     impl Client {
-        pub fn execute(&self) {
-            graphic::init();
-
-            while self.running {
-                println!("execute in impl");
-                self.render();
-                thread::sleep(Duration::from_millis(1000))
+        pub fn new() -> Self {
+            Client {
+                running: true,
+                graphic_sdl: GraphicsSDL::new()
             }
         }
-    }
 
-    impl IClient for Client {
+        pub fn execute(&self) {
+            //self.graphic_sdl.init();
+
+            while self.running {
+
+                //inputUpdate
+                //soundUpdate
+                //windowFocus
+                self.render();
+            }
+        }
+
         fn render(&self) {
-            println!("render in impl IClient for Client");
+            self.graphic_sdl.swap();
         }
     }
 }
 
 
 fn main() {
-    let client = client::Client {running: true};
+    let client = client::Client::new();
     client.execute();
 }

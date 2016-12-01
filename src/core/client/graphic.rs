@@ -2,19 +2,35 @@ extern crate sdl2;
 
 use self::sdl2::pixels::Color;
 
-pub fn init() {
-    let sdl_context = sdl2::init().unwrap();
-    let video = sdl_context.video().unwrap();
+pub mod graphics {
+    use graphic::sdl2::video;
+    use graphic::sdl2;
 
-    let window = video.window("Worlds of Teewords", 800, 600)
-        .position_centered().opengl()
-        .build().unwrap();
+    pub struct GraphicsSDL {
+        window: video::Window
+    }
 
-    let mut renderer = window.renderer()
-        .accelerated()
-        .build().unwrap();
+    impl GraphicsSDL {
+        pub fn new() -> Self {
+            GraphicsSDL {
+                window: GraphicsSDL::create_window()
+            }
+        }
 
-    renderer.set_draw_color(Color::RGB(0, 0, 0));
-    renderer.clear();
-    renderer.present();
+        fn create_window() -> video::Window {
+            let sdl_context = sdl2::init().unwrap();
+            let video = sdl_context.video().unwrap();
+
+            let window = video.window("Worlds of Teewords", 800, 600)
+                .position_centered()
+                .opengl()
+                .build().unwrap();
+
+            return window;
+        }
+
+        pub fn swap(&self) {
+            self.window.gl_swap_window();
+        }
+    }
 }
